@@ -1,0 +1,27 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+  <div class="container">
+    <div class="login card">
+      <div class="mb-2 avatar">
+        <img [src]="iconCoruja">
+      </div>
+      <div class="edit">
+        <img src="../../../assets/icons/edit.png" (click)="dialogOn=!dialogOn">
+      </div>
+        <div class="form-floating my-3">
+          <input type="text" class="form-control" id="nome" formControlName="nome">
+          <label for="nome">Nome</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="email" formControlName="email">
+          <label for="email">E-mail</label>
+        </div>
+        <div class="form-floating mb-3 input-group flex-nowrap">
+          <input [type]="type" class="form-control" id="senha" formControlName="senha">
+          <label for="senha">Senha</label>
+          <span class="input-group-text" id="basic-addon2" (click)="onChangeType()"><i [ngClass]="[type=='password' ? 'bi bi-eye-slash' : 'bi bi-eye']"></i></span>
+        </div>
+      <button type="button" class="btn btn-primary mt-3">Cadastrar</button>
+    </div>
+  </div>
+</div>

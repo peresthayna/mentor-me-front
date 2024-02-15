@@ -1,0 +1,22 @@
+<app-navbar></app-navbar>
+<div class="container-fluid">
+  <div class="container">
+    <div class="login card">
+      <div class="mb-2">
+        <img src="../../../assets/coruja/c6.png">
+      </div>
+      <form [formGroup]="loginForm" #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="email" formControlName="email">
+          <label for="email">E-mail</label>
+        </div>
+        <div class="form-floating mb-3 input-group flex-nowrap">
+          <input [type]="type" class="form-control" id="senha" formControlName="senha">
+          <label for="senha">Senha</label>
+          <span class="input-group-text" id="basic-addon2" (click)="onChangeType()"><i [class]="type == 'password' ? 'bi bi-eye-slash' : 'bi bi-eye'"></i></span>
+        </div>
+        <button type="button" class="btn btn-primary mt-3">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
