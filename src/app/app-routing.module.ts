@@ -3,11 +3,19 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainComponent } from './main/main/main.component';
 import { LoginComponent } from './main/login/login.component';
 import { CadastroComponent } from './main/cadastro/cadastro.component';
+import { UsuarioNaoAutenticadoGuard } from './shared/guards/usuario-nao-autenticado.guard';
+import { UsuarioAutenticadoGuard } from './shared/guards/usuario-autenticado.guard';
+import { HomeComponent } from './main/home/home.component';
+import { FazerPublicacaoComponent } from './main/fazer-publicacao/fazer-publicacao.component';
 
 const routes: Routes = [
-  { path: '', component: MainComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'cadastro', component: CadastroComponent }
+  { path: '', component: MainComponent, canActivate: [UsuarioNaoAutenticadoGuard]},
+  { path: 'cadastro', component: CadastroComponent, canActivate: [UsuarioNaoAutenticadoGuard]},
+  { path: 'login', component: LoginComponent, canActivate: [UsuarioNaoAutenticadoGuard]},
+  { path: 'home', component: HomeComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'home/nova-pergunta', component: FazerPublicacaoComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'tags', component: HomeComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'users', component: HomeComponent, canActivate: [UsuarioAutenticadoGuard]}
 ];
 
 @NgModule({

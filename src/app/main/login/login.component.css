@@ -52,11 +52,6 @@ img {
   background-color: #C0C0C0;
 }
 
-.msg-erro {
-  text-align: start;
-  color: red;
-}
-
-.radios .form-check {
-  display: inline-block;
+.has-error {
+  border: 2px solid red;
 }

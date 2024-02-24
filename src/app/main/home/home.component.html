@@ -1,0 +1,5 @@
+<app-navbar-logado (menu)="onOpenMenu($event)" (eventBusca)="getBusca($event)"></app-navbar-logado>
+<app-menu *ngIf="menu"></app-menu>
+<div [ngClass]="[menu ? 'com-menu':'']">
+  <app-publicacao></app-publicacao>
+</div>

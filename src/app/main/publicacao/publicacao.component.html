@@ -1,0 +1,25 @@
+<div class="container-fluid" *ngIf="publicacoes">
+  <div class="row header">
+    <div class="text-start">
+      <h2 class="mt-2 ml-2">Todas as questões</h2>
+      <h5>{{ total }}{{ total == 1 ? ' questão' : ' questões' }}</h5>
+    </div>
+      <div class="buttons">
+        <button class="btn btn-ask-question" (click)="onClickAdicionarPergunta()">Fazer pergunta</button>
+        <div class="filtro">
+          <span [ngClass]="{'selected':selectedMostRecent}" (click)="onChangeFilter('recent')">Mais recentes</span>
+          <span [ngClass]="{'selected':selectedMostOld}" (click)="onChangeFilter('old')">Mais antigas</span>
+          <span [ngClass]="{'selected':selectedWithoutAnswer}" (click)="onChangeFilter('answer')">Sem resposta</span>
+        </div>
+      </div>
+  </div>
+  <hr>
+  <div class="container-fluid pubs row" *ngFor="let pub of publicacoes">
+    <h5 class="col-12 titulo">{{ pub.titulo }}</h5>
+    <p class="publicacao">{{ pub.publicacao }}</p>
+    <p class="col-2 text-center">{{ pub.visualizacoes }}&nbsp;visualizações<br>{{ pub.visualizacoes }}&nbsp;respostas</p>
+    <div class="container mb-2">
+      <p-tag *ngFor="let tag of pub.publicacaoTags" [value]="tag.nomeTag" class="m-1" severity="info"></p-tag>
+    </div><hr>
+  </div>
+</div>
