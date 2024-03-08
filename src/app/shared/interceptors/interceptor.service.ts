@@ -26,9 +26,7 @@ export class Interceptor implements HttpInterceptor {
       return next.handle(request).pipe(catchError(error => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
           this.loginService.deslogar();
-          return throwError(() => {
-            alert('Falha ao renovar sessão.');
-            return 'Falha ao renovar sessão.'});
+          return throwError('Falha ao renovar sessão.');
         }
         else {
           return throwError(error.message);

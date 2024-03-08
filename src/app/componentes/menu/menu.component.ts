@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 })
 export class MenuComponent implements OnInit {
 
+  @Output() public ativarPagePublicacao: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   constructor(
     private router: Router
   ) { }
@@ -17,6 +19,7 @@ export class MenuComponent implements OnInit {
 
   public onClick(choice: string): void {
     if(choice == 'home') {
+      this.ativarPagePublicacao.emit(true);
       this.router.navigate(['/home']);
     } else if(choice == 'tags') {
       this.router.navigate(['/tags']);

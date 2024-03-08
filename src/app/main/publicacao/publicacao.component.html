@@ -1,4 +1,9 @@
-<div class="container-fluid" *ngIf="publicacoes">
+<div class="d-flex justify-content-center text-center pt-5" style="overflow: hidden;" *ngIf="publicacoes.length == 0">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Carregando informações...</span>
+  </div>
+</div>
+<div class="container-fluid" *ngIf="publicacoes.length > 0">
   <div class="row header">
     <div class="text-start">
       <h2 class="mt-2 ml-2">Todas as questões</h2>
@@ -15,11 +20,12 @@
   </div>
   <hr>
   <div class="container-fluid pubs row" *ngFor="let pub of publicacoes">
-    <h5 class="col-12 titulo">{{ pub.titulo }}</h5>
-    <p class="publicacao">{{ pub.publicacao }}</p>
-    <p class="col-2 text-center">{{ pub.visualizacoes }}&nbsp;visualizações<br>{{ pub.visualizacoes }}&nbsp;respostas</p>
+    <h5 class="col-12 titulo" (click)="onClickExibirDetalhesPublicacao(pub)">{{ pub.titulo }}</h5>
+    <div class="publicacao m-0" [innerHTML]="pub.publicacao"></div>
+    <p class="col-2 text-center m-0">{{ pub.visualizacoes }}&nbsp;visualizações<br>{{ pub.visualizacoes }}&nbsp;respostas</p>
     <div class="container mb-2">
       <p-tag *ngFor="let tag of pub.publicacaoTags" [value]="tag.nomeTag" class="m-1" severity="info"></p-tag>
     </div><hr>
   </div>
+  <p-paginator [rows]="pageSize" [totalRecords]="total" (onPageChange)="onSwitchPage($event)"></p-paginator>
 </div>

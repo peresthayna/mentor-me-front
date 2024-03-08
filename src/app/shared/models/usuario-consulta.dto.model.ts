@@ -9,4 +9,5 @@ export class UsuarioConsultaDTO {
   pontuacao: number;
   dataCadastro: Date;
   role: UsuarioRole;
+  totalPublicacoes: number;
 }

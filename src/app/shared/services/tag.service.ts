@@ -1,8 +1,9 @@
 import { TagCadastroDTO } from './../models/tag-cadastro-dto.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TagConsultaDTO } from '../models/tag-consulta-dto.model';
+import { PageResponseDTO } from '../models/page-response-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,16 @@ export class TagService {
 
   constructor(private http: HttpClient) { }
 
-  public getTagsOrdenadasPorData(): Observable<TagConsultaDTO[]> {
-    return this.http.get<TagConsultaDTO[]>(this.URL);
+  public getTagsOrdenadasPorData(params: HttpParams): Observable<PageResponseDTO<TagConsultaDTO>> {
+    return this.http.get<PageResponseDTO<TagConsultaDTO>>(this.URL,{params});
   }
 
-  public getTagsOrdenadasPorNome(): Observable<TagConsultaDTO[]> {
-    return this.http.get<TagConsultaDTO[]>(this.URL + '/pesquisa-nome-asc');
+  public getTagsOrdenadasPorNome(params: HttpParams): Observable<PageResponseDTO<TagConsultaDTO>> {
+    return this.http.get<PageResponseDTO<TagConsultaDTO>>(this.URL + '/nome-asc',{params});
+  }
+
+  public getTagsOrdenadasPorQuantidadeDePublicacoes(params: HttpParams): Observable<PageResponseDTO<TagConsultaDTO>> {
+    return this.http.get<PageResponseDTO<TagConsultaDTO>>(this.URL + '/popularidade',{params});
   }
 
   public getTagsPorNome(nome: string): Observable<TagConsultaDTO[]> {
@@ -29,12 +34,12 @@ export class TagService {
     return this.http.get<TagConsultaDTO>(this.URL + '/' + id);
   }
 
-  public cadastrar(tagCadastro: TagCadastroDTO): void {
-    this.http.post<TagCadastroDTO>(this.URL, tagCadastro);
+  public cadastrar(tagCadastro: TagCadastroDTO): Observable<TagConsultaDTO> {
+    return this.http.post<TagConsultaDTO>(this.URL, tagCadastro);
   }
 
-  public atualizar(idTag: number, tagCadastro: TagCadastroDTO): void {
-    this.http.put<TagCadastroDTO>(this.URL + '/' + idTag, tagCadastro);
+  public atualizar(idTag: number, tagCadastro: TagCadastroDTO): Observable<void> {
+    return this.http.put<void>(this.URL + '/' + idTag, tagCadastro);
   }
 
 }

@@ -59,7 +59,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-word;
-  max-height: 50px;
+  max-height: 46px;
   width: 80%;
 }
 
@@ -76,4 +76,17 @@
 .pubs {
   max-height: 150px;
   overflow: hidden;
+}
+
+a i {
+  color: black;
+}
+
+.paginat {
+  justify-content: center;
+  text-align: center;
+}
+
+.paginat a {
+  display: inline-block;
 }

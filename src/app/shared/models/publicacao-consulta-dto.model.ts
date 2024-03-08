@@ -9,4 +9,5 @@ export class PublicacaoConsultaDTO {
   dataFim?: Date;
   visualizacoes: number;
   publicacaoTags: PublicacaoTagConsultaDTO[] = [];
+  quantoTempoFoiPostado: string;
 }

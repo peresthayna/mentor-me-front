@@ -17,20 +17,41 @@ export class PublicacaoComponent implements OnInit {
   public selectedMostOld: boolean = false;
   public selectedWithoutAnswer: boolean = false;
   public params: HttpParams = new HttpParams();
+  public page: number = 0;
+  public pageSize: number = 5;
+  public hasNextPage: boolean = false;
 
   constructor(
     private publicacaoService: PublicacaoService,
     private router: Router) { }
 
   ngOnInit(): void {
-    this.getPublicacoesOrdenadasPorData();
+    this.getPublicacoesOrdenadasPorDataMaisRecente(this.page);
   }
 
-  public getPublicacoesOrdenadasPorData(): void {
-    this.params = this.params.append('page',0);
-    this.params = this.params.append('pageSize',10);
+  public getPublicacoesOrdenadasPorDataMaisRecente(page: number): void {
+    this.page = page;
+    this.params = new HttpParams()
+    .set('page', this.page)
+    .set('pageSize', this.pageSize)
+    .set('ascending', false)
+    .set('order', 'dataInicio');
     this.publicacaoService.getPublicacoesOrdenadasPorData(this.params).subscribe(publicacoes => {
       this.publicacoes = publicacoes.items;
+      this.hasNextPage = publicacoes.hasNext;
+      this.total = publicacoes.totalElements;
+    })
+  }
+
+  public getPublicacoesOrdenadasPorDataMaisAntiga(page: number): void {
+    this.page = page;
+    this.params = new HttpParams()
+    .set('page', this.page)
+    .set('pageSize', this.pageSize)
+    .set('order', 'dataInicio');
+    this.publicacaoService.getPublicacoesOrdenadasPorData(this.params).subscribe(publicacoes => {
+      this.publicacoes = publicacoes.items;
+      this.hasNextPage = publicacoes.hasNext;
       this.total = publicacoes.totalElements;
     })
   }
@@ -40,11 +61,12 @@ export class PublicacaoComponent implements OnInit {
       this.selectedMostRecent = true;
       this.selectedMostOld = false;
       this.selectedWithoutAnswer = false;
-      this.getPublicacoesOrdenadasPorData();
+      this.getPublicacoesOrdenadasPorDataMaisRecente(this.page);
     } else if(filter == 'old') {
       this.selectedMostRecent = false;
       this.selectedMostOld = true;
       this.selectedWithoutAnswer = false;
+      this.getPublicacoesOrdenadasPorDataMaisAntiga(this.page);
     } else {
       this.selectedMostRecent = false;
       this.selectedMostOld = false;
@@ -54,6 +76,20 @@ export class PublicacaoComponent implements OnInit {
 
   public onClickAdicionarPergunta(): void {
     this.router.navigate(['/home/nova-pergunta']);
+  }
+
+  public onClickExibirDetalhesPublicacao(publicacaoEscolhida: PublicacaoConsultaDTO): void {
+    this.router.navigate(['/home/pergunta/'+publicacaoEscolhida.id]);
+  }
+
+  public onSwitchPage(event): void {
+    if(this.selectedMostRecent) {
+      this.getPublicacoesOrdenadasPorDataMaisRecente(event.page);
+    } else if(this.selectedMostOld) {
+      this.getPublicacoesOrdenadasPorDataMaisAntiga(event.page);
+    } else {
+
+    }
   }
 
 }

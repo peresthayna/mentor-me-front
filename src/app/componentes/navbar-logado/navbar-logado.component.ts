@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LoginService } from 'src/app/shared/services/login.service';
 
 @Component({
@@ -11,7 +11,7 @@ export class NavbarLogadoComponent implements OnInit {
   @Output('menu')
     public menu: EventEmitter<boolean> = new EventEmitter<boolean>();
   public emitOnOff: boolean = true;
-  public busca: string;
+  @Input() public busca: string;
   @Output('eventBusca')
     public eventBusca: EventEmitter<string> = new EventEmitter<string>();
 

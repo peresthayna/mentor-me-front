@@ -14,7 +14,7 @@
         <label for="editor" class="form-label">Corpo</label>
         <span>Inclua todas as informações que alguém precisaria para responder sua pergunta</span>
         <div [ngClass]="[publicacaoValid ? 'container p-0 m-0' : 'container p-0 m-0 has-error']">
-        <p-editor [(ngModel)]="publicacao" [style]="{'height':'220px'}" (keyup)="validatePublicacaoField()" (input)="validatePublicacao()">
+        <p-editor [(ngModel)]="publicacao" [style]="{'height':'220px'}" (keyup)="validatePublicacao()">
             <p-header>
               <span class="ql-formats">
                 <button class="ql-bold" aria-label="Bold"></button>
@@ -30,7 +30,7 @@
             </p-header>
           </p-editor>
         </div>
-        <p class="text-danger" *ngIf="!publicacaoValid">Texto da publicação deve ter pelo menos 150 caracteres.</p>
+        <p class="text-danger" *ngIf="!publicacaoValid">Texto da publicação é obrigatório</p>
         <label for="tags" class="form-label mt-1">Tags</label>
         <span>Adicione até 5 tags para descrever o que é sua pergunta</span><br>
         <input type="text" class="form-control input" [(ngModel)]="tag" (input)="onSearchTag($event)">

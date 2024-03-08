@@ -15,4 +15,8 @@ export class UsuarioService {
   public getUsuarios(): Observable<UsuarioConsultaDTO[]> {
     return this.http.get<UsuarioConsultaDTO[]>(this.URL);
   }
+
+  public getUsuarioNaSession(): Observable<UsuarioConsultaDTO> {
+    return this.http.get<UsuarioConsultaDTO>(this.URL+'/usuario-ativo');
+  }
 }

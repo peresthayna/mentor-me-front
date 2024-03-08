@@ -1,4 +1,4 @@
-import { TagConsultaDTO } from "./tag-consulta-dto.model";
+import { PublicacaoTagCadastroDTO } from "./publicacao-tag-cadastro-dto.model";
 
 export class PublicacaoCadastroDTO {
   idUsuario: number;
@@ -6,5 +6,5 @@ export class PublicacaoCadastroDTO {
   publicacao: string;
   dataInicio: Date;
   visualizacoes: number;
-  tags: TagConsultaDTO[] = [];
+  publicacaoTags: PublicacaoTagCadastroDTO[] = [];
 }

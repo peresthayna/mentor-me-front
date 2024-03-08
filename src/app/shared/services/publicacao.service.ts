@@ -15,11 +15,15 @@ export class PublicacaoService {
   constructor(private http: HttpClient) { }
 
   public getPublicacoesOrdenadasPorData(params: HttpParams): Observable<PageResponseDTO<PublicacaoConsultaDTO>> {
-    return this.http.get<PageResponseDTO<PublicacaoConsultaDTO>>(this.URL,{params: params});
+    return this.http.get<PageResponseDTO<PublicacaoConsultaDTO>>(this.URL,{params});
   }
 
-  public getPublicacoesOrdenadasPorMaisAntigas(): Observable<PublicacaoConsultaDTO[]> {
-    return this.http.get<PublicacaoConsultaDTO[]>(this.URL + '/ordenadoPorDataMaisAntiga');
+  public getPublicacoesPageableTeste(params: HttpParams): Observable<PageResponseDTO<PublicacaoConsultaDTO>> {
+    return this.http.get<PageResponseDTO<PublicacaoConsultaDTO>>(this.URL+'/teste',{params});
+  }
+
+  public getPublicacoesBusca(params: HttpParams, publicacao: string): Observable<PageResponseDTO<PublicacaoConsultaDTO>> {
+    return this.http.get<PageResponseDTO<PublicacaoConsultaDTO>>(`${this.URL}/pesquisa/${publicacao}`,{params});
   }
 
   public getPublicacaoPorId(idPublicacao: number): Observable<PublicacaoConsultaDTO> {

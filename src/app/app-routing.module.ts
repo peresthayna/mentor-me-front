@@ -7,6 +7,8 @@ import { UsuarioNaoAutenticadoGuard } from './shared/guards/usuario-nao-autentic
 import { UsuarioAutenticadoGuard } from './shared/guards/usuario-autenticado.guard';
 import { HomeComponent } from './main/home/home.component';
 import { FazerPublicacaoComponent } from './main/fazer-publicacao/fazer-publicacao.component';
+import { DetalhesPublicacaoComponent } from './main/detalhes-publicacao/detalhes-publicacao.component';
+import { TagComponent } from './main/tag/tag.component';
 
 const routes: Routes = [
   { path: '', component: MainComponent, canActivate: [UsuarioNaoAutenticadoGuard]},
@@ -14,7 +16,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [UsuarioNaoAutenticadoGuard]},
   { path: 'home', component: HomeComponent, canActivate: [UsuarioAutenticadoGuard]},
   { path: 'home/nova-pergunta', component: FazerPublicacaoComponent, canActivate: [UsuarioAutenticadoGuard]},
-  { path: 'tags', component: HomeComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'home/pergunta/:id', component: DetalhesPublicacaoComponent, canActivate: [UsuarioAutenticadoGuard]},
+  { path: 'tags', component: TagComponent, canActivate: [UsuarioAutenticadoGuard]},
   { path: 'users', component: HomeComponent, canActivate: [UsuarioAutenticadoGuard]}
 ];
 

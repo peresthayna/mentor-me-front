@@ -11,6 +11,10 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MainComponent } from './main/main.component';
 import { PublicacaoComponent } from './publicacao/publicacao.component';
+import { DetalhesPublicacaoComponent } from './detalhes-publicacao/detalhes-publicacao.component';
+import { TagComponent } from './tag/tag.component';
+import { PaginatorModule } from 'primeng-lts/paginator';
+import { PesquisaPublicacaoComponent } from './pesquisa-publicacao/pesquisa-publicacao.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,10 @@ import { PublicacaoComponent } from './publicacao/publicacao.component';
     CadastroComponent,
     HomeComponent,
     PublicacaoComponent,
-    FazerPublicacaoComponent
+    FazerPublicacaoComponent,
+    DetalhesPublicacaoComponent,
+    TagComponent,
+    PesquisaPublicacaoComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +35,8 @@ import { PublicacaoComponent } from './publicacao/publicacao.component';
     ReactiveFormsModule,
     EditorModule,
     ReactiveFormsModule,
-    TagModule
+    TagModule,
+    PaginatorModule
   ],
   exports: [
     MainComponent,

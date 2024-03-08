@@ -5,10 +5,13 @@ import { TagConsultaDTO } from 'src/app/shared/models/tag-consulta-dto.model';
 import { TagService } from 'src/app/shared/services/tag.service';
 import { debounceTime } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
-import { TagCadastroDTO } from 'src/app/shared/models/tag-cadastro-dto.model';
 import { PublicacaoService } from 'src/app/shared/services/publicacao.service';
 import { PublicacaoCadastroDTO } from 'src/app/shared/models/publicacao-cadastro-dto.model';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { PublicacaoTagCadastroDTO } from 'src/app/shared/models/publicacao-tag-cadastro-dto.model';
+import { UsuarioService } from 'src/app/shared/services/usuario.service';
+import { UsuarioConsultaDTO } from 'src/app/shared/models/usuario-consulta.dto.model';
+import { TagCadastroDTO } from 'src/app/shared/models/tag-cadastro-dto.model';
 
 @Component({
   selector: 'app-fazer-publicacao',
@@ -36,7 +39,8 @@ export class FazerPublicacaoComponent implements OnInit {
   constructor(
     private router: Router,
     private tagService: TagService,
-    private publicacaoService: PublicacaoService
+    private publicacaoService: PublicacaoService,
+    private usuarioService: UsuarioService
   ) { }
 
   ngOnInit(): void {
@@ -60,8 +64,11 @@ export class FazerPublicacaoComponent implements OnInit {
   }
 
   public getTags(): void {
-    this.tagService.getTagsOrdenadasPorData().subscribe(t => {
-      this.tagsBuscadas = t;
+    let params: HttpParams = new HttpParams()
+      .set('page', 0)
+      .set('pageSize', 20)
+    this.tagService.getTagsOrdenadasPorData(params).subscribe(t => {
+      this.tagsBuscadas = t.items;
     })
   }
 
@@ -112,14 +119,6 @@ export class FazerPublicacaoComponent implements OnInit {
     }
   }
 
-  public validatePublicacaoField(): void {
-    if(this.publicacao.length > 149 && this.publicacao != '') {
-      this.isPublicacaoValid = true;
-    } else {
-      this.isPublicacaoValid = false;
-    }
-  }
-
   public hideTagJaAdicionada(tagSelecionada: TagConsultaDTO): boolean {
     return !!this.tags.find(tag => tag.id === tagSelecionada.id);
   }
@@ -140,15 +139,19 @@ export class FazerPublicacaoComponent implements OnInit {
   }
 
   public adicionarPublicacao(): void {
+    this.validatePublicacao();
     this.titulo ? this.tituloValid = true : this.tituloValid = false;
     this.publicacao ? this.publicacaoValid = true : this.publicacaoValid = false;
     if(this.publicacaoValid && this.tituloValid) {
-        const publicacaoNova: PublicacaoCadastroDTO = new PublicacaoCadastroDTO();
+        let publicacaoNova: PublicacaoCadastroDTO = new PublicacaoCadastroDTO();
         publicacaoNova.titulo = this.titulo;
         publicacaoNova.publicacao = this.publicacao;
-        publicacaoNova.tags = this.tags;
+        let publicacaoTags: PublicacaoTagCadastroDTO[] = [];
+        if(this.tags) {
+          this.tags.forEach(tag => publicacaoTags.push(new PublicacaoTagCadastroDTO(tag)));
+        }
+        publicacaoNova.publicacaoTags = publicacaoTags;
         this.publicacaoService.cadastrarPublicacao(publicacaoNova).subscribe(() => {
-          alert('Pergunta feita com sucesso!');
           this.router.navigate(['/home']);
         },(httpError: HttpErrorResponse) => {
           alert('Erro ao publicar pergunta.');
